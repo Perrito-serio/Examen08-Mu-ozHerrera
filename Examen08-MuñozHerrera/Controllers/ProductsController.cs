@@ -54,4 +54,14 @@ public class ProductsController : ControllerBase
         var products = await _productRepository.GetProductsWithoutDescriptionAsync();
         return Ok(products);
     }
+    
+    [HttpGet("by-client/{clientId}")]
+    public async Task<IActionResult> GetProductsByClient(int clientId)
+    {
+        // Llama al método del repositorio que acabamos de crear.
+        var products = await _productRepository.GetProductsSoldToClientAsync(clientId);
+
+        // Devuelve la lista de productos con un estado 200 OK.
+        return Ok(products);
+    }
 }

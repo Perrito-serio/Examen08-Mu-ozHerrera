@@ -11,5 +11,7 @@ public interface IClientRepository : IGenericRepository<Client>
     
     Task<ClientWithOrderCountDto?> GetClientWithMostOrdersAsync();
 
+    Task<IEnumerable<Client>> GetClientsByProductAsync(int productId);
+
     
 }

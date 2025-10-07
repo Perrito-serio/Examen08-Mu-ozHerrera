@@ -38,4 +38,21 @@ public class ClientRepository : GenericRepository<Client>, IClientRepository
             // 5. Tomamos el primer resultado, que será el cliente con más pedidos.
             .FirstOrDefaultAsync();
     }
+    
+    public async Task<IEnumerable<Client>> GetClientsByProductAsync(int productId)
+    {
+        // La consulta se puede leer así:
+        // "Desde la tabla de Clientes..."
+        return await _context.Clients
+            // "...filtra (Where) y quédate solo con aquellos clientes (c) para los cuales..."
+            // "...exista al menos un (Any) pedido (o) en su lista de pedidos..."
+            // "...que a su vez tenga al menos un (Any) detalle de orden (od)..."
+            // "...cuyo ProductId sea igual al productId que nos pasaron."
+            .Where(c => c.Orders.Any(o => o.Orderdetails.Any(od => od.Productid == productId)))
+
+            // "Asegúrate de que la lista final no tenga clientes duplicados."
+            .Distinct()
+
+            .ToListAsync();
+    }
 }

@@ -12,5 +12,7 @@ public interface IProductRepository : IGenericRepository<Product>
     Task<decimal> GetAverageProductPriceAsync();
     
     Task<IEnumerable<Product>> GetProductsWithoutDescriptionAsync();
+    
+    Task<IEnumerable<Product>> GetProductsSoldToClientAsync(int clientId);
 
 }

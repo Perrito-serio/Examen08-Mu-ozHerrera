@@ -51,4 +51,22 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
             .Where(p => string.IsNullOrEmpty(p.Description)) // <-- ¡La lógica LINQ!
             .ToListAsync();
     }
+    
+    public async Task<IEnumerable<Product>> GetProductsSoldToClientAsync(int clientId)
+    {
+        // La consulta se puede leer así:
+        // "Desde la tabla de Productos..."
+        return await _context.Products
+            // "...filtra (Where) y quédate solo con aquellos productos (p) para los cuales..."
+            // "...exista al menos un (Any) detalle de orden (od) en su lista de detalles..."
+            // "...tal que el ClientId de la orden (Order) asociada a ese detalle sea igual al clientId que nos pasaron."
+            .Where(p => p.Orderdetails.Any(od => od.Order.Clientid == clientId))
+
+            // "Finalmente, de la lista resultante, asegúrate de que no haya duplicados."
+            .Distinct() 
+
+            // "Y convierte el resultado en una lista."
+            .ToListAsync();
+    }
+
 }

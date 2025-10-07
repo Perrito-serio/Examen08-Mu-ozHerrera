@@ -42,4 +42,11 @@ public class OrdersController : ControllerBase
         var orders = await _orderRepository.GetOrdersAfterDateAsync(date);
         return Ok(orders);
     }
+    
+    [HttpGet("with-details")]
+    public async Task<IActionResult> GetAllOrdersWithDetails()
+    {
+        var orders = await _orderRepository.GetAllOrdersWithDetailsAsync();
+        return Ok(orders);
+    }
 }

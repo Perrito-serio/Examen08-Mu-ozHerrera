@@ -33,4 +33,14 @@ public class ClientsController : ControllerBase
         }
         return Ok(client);
     }
+    
+    [HttpGet("by-product/{productId}")]
+    public async Task<IActionResult> GetClientsByProduct(int productId)
+    {
+        // Llama al método del repositorio que acabamos de crear.
+        var clients = await _clientRepository.GetClientsByProductAsync(productId);
+
+        // Devuelve la lista de clientes con un estado 200 OK.
+        return Ok(clients);
+    }
 }
