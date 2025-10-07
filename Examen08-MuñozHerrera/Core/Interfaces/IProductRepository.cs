@@ -6,4 +6,8 @@ namespace Examen08_MuñozHerrera.Core.Interfaces;
 public interface IProductRepository : IGenericRepository<Product>
 {
     Task<IEnumerable<Product>> GetProductsByPriceGreaterThanAsync(decimal price);
+    
+    Task<Product?> GetMostExpensiveProductAsync();
+    
+    
 }

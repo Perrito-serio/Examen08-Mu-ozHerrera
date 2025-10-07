@@ -20,4 +20,13 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
             .Where(p => p.Price > price) // <-- ¡La lógica LINQ!
             .ToListAsync();
     }
+    
+    public async Task<Product?> GetMostExpensiveProductAsync()
+    {
+        return await _context.Products
+            // 1. Ordena todos los productos por su precio en orden descendente (del más caro al más barato).
+            .OrderByDescending(p => p.Price)
+            // 2. Toma el primer elemento de la lista ordenada.
+            .FirstOrDefaultAsync();
+    }
 }

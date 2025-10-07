@@ -22,4 +22,19 @@ public class ProductsController : ControllerBase
         var products = await _productRepository.GetProductsByPriceGreaterThanAsync(price);
         return Ok(products);
     }
+    
+    // GET: api/products/most-expensive
+    [HttpGet("most-expensive")]
+    public async Task<IActionResult> GetMostExpensiveProduct()
+    {
+        var product = await _productRepository.GetMostExpensiveProductAsync();
+
+        // Es una buena práctica verificar si se encontró un producto antes de devolverlo.
+        if (product == null)
+        {
+            return NotFound("No se encontraron productos en la base de datos.");
+        }
+            
+        return Ok(product);
+    }
 }
