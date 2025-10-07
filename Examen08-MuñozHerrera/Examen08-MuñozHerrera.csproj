@@ -22,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="API\Controllers\" />
       <Folder Include="Application\Mappers\" />
+      <Folder Include="Controllers\" />
       <Folder Include="Infrastructure\Data\" />
     </ItemGroup>
 
