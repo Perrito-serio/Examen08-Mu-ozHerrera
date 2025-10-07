@@ -1,4 +1,3 @@
-// Ruta: Core/Interfaces/IGenericRepository.cs
 namespace Examen08_MuñozHerrera.Core.Interfaces;
 
 public interface IGenericRepository<T> where T : class

@@ -1,4 +1,3 @@
-// Ruta: DTOs/OrderProductDetailDto.cs
 namespace Examen08_MuñozHerrera.DTOs;
 
 public class OrderProductDetailDto

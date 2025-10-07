@@ -1,4 +1,3 @@
-// Ruta: Controllers/ProductsController.cs
 using Examen08_MuñozHerrera.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +28,6 @@ public class ProductsController : ControllerBase
     {
         var product = await _productRepository.GetMostExpensiveProductAsync();
 
-        // Es una buena práctica verificar si se encontró un producto antes de devolverlo.
         if (product == null)
         {
             return NotFound("No se encontraron productos en la base de datos.");
@@ -43,7 +41,6 @@ public class ProductsController : ControllerBase
     {
         var averagePrice = await _productRepository.GetAverageProductPriceAsync();
 
-        // Devolvemos el resultado en un objeto anónimo para que la respuesta JSON sea clara.
         return Ok(new { averagePrice = averagePrice });
     }
     
@@ -58,10 +55,7 @@ public class ProductsController : ControllerBase
     [HttpGet("by-client/{clientId}")]
     public async Task<IActionResult> GetProductsByClient(int clientId)
     {
-        // Llama al método del repositorio que acabamos de crear.
         var products = await _productRepository.GetProductsSoldToClientAsync(clientId);
-
-        // Devuelve la lista de productos con un estado 200 OK.
         return Ok(products);
     }
 }

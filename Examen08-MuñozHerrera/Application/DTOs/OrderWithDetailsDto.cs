@@ -1,4 +1,3 @@
-// Ruta: DTOs/OrderWithDetailsDto.cs
 namespace Examen08_MuñozHerrera.DTOs;
 
 public class OrderWithDetailsDto

@@ -1,4 +1,3 @@
-// Ruta: Core/Interfaces/IOrderDetailRepository.cs
 using Examen08_MuñozHerrera.Core.Entities;
 using Examen08_MuñozHerrera.DTOs;
 

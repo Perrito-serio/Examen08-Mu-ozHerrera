@@ -1,4 +1,3 @@
-// Ruta: Controllers/OrdersController.cs
 using Examen08_MuñozHerrera.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +30,6 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> GetTotalQuantity(int orderId)
     {
         var total = await _orderDetailRepository.GetTotalQuantityByOrderIdAsync(orderId);
-        // Devolvemos el resultado en un objeto anónimo para que la respuesta JSON sea más clara.
         return Ok(new { orderId = orderId, totalQuantity = total });
     }
     

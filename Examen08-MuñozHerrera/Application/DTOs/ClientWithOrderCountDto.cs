@@ -1,4 +1,3 @@
-// Ruta: DTOs/ClientWithOrderCountDto.cs
 namespace Examen08_MuñozHerrera.DTOs;
 
 public class ClientWithOrderCountDto
