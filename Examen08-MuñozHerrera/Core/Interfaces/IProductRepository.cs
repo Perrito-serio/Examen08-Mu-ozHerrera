@@ -9,5 +9,8 @@ public interface IProductRepository : IGenericRepository<Product>
     
     Task<Product?> GetMostExpensiveProductAsync();
     
+    Task<decimal> GetAverageProductPriceAsync();
     
+    Task<IEnumerable<Product>> GetProductsWithoutDescriptionAsync();
+
 }

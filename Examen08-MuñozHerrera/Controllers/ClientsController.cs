@@ -22,4 +22,15 @@ public class ClientsController : ControllerBase
         var clients = await _clientRepository.FindClientsByNameAsync(name);
         return Ok(clients);
     }
+    
+    [HttpGet("with-most-orders")]
+    public async Task<IActionResult> GetClientWithMostOrders()
+    {
+        var client = await _clientRepository.GetClientWithMostOrdersAsync();
+        if (client == null)
+        {
+            return NotFound("No se encontraron clientes con pedidos.");
+        }
+        return Ok(client);
+    }
 }

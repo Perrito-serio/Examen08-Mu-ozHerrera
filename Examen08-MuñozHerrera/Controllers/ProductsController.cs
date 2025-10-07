@@ -37,4 +37,21 @@ public class ProductsController : ControllerBase
             
         return Ok(product);
     }
+    
+    [HttpGet("average-price")]
+    public async Task<IActionResult> GetAverageProductPrice()
+    {
+        var averagePrice = await _productRepository.GetAverageProductPriceAsync();
+
+        // Devolvemos el resultado en un objeto anónimo para que la respuesta JSON sea clara.
+        return Ok(new { averagePrice = averagePrice });
+    }
+    
+    // GET: api/products/without-description
+    [HttpGet("without-description")]
+    public async Task<IActionResult> GetProductsWithoutDescription()
+    {
+        var products = await _productRepository.GetProductsWithoutDescriptionAsync();
+        return Ok(products);
+    }
 }

@@ -29,4 +29,26 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
             // 2. Toma el primer elemento de la lista ordenada.
             .FirstOrDefaultAsync();
     }
+    
+    public async Task<decimal> GetAverageProductPriceAsync()
+    {
+        // Si no hay productos, AverageAsync lanzará una excepción. 
+        // Una comprobación previa es una buena práctica.
+        if (!await _context.Products.AnyAsync())
+        {
+            return 0;
+        }
+
+        // Calcula el promedio del valor de la columna 'Price' para todos los productos.
+        return await _context.Products.AverageAsync(p => p.Price); // <-- ¡La lógica LINQ de agregación!
+    }
+    
+    public async Task<IEnumerable<Product>> GetProductsWithoutDescriptionAsync()
+    {
+        // La consulta LINQ para filtrar por descripción nula o vacía.
+        // string.IsNullOrEmpty() se traduce eficientemente a SQL.
+        return await _context.Products
+            .Where(p => string.IsNullOrEmpty(p.Description)) // <-- ¡La lógica LINQ!
+            .ToListAsync();
+    }
 }
