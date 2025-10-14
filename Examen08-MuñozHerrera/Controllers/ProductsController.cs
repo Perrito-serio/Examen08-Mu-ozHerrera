@@ -7,18 +7,18 @@ namespace Examen08_MuñozHerrera.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IProductService _productService;
 
-    public ProductsController(IProductRepository productRepository)
+    public ProductsController(IProductService productService)
     {
-        _productRepository = productRepository;
+        _productService = productService;
     }
 
     // GET: api/products/price-greater-than?price=20
     [HttpGet("price-greater-than")]
     public async Task<IActionResult> GetProductsByPrice([FromQuery] decimal price)
     {
-        var products = await _productRepository.GetProductsByPriceGreaterThanAsync(price);
+        var products = await _productService.GetProductsByPriceGreaterThanAsync(price);
         return Ok(products);
     }
     
@@ -26,7 +26,7 @@ public class ProductsController : ControllerBase
     [HttpGet("most-expensive")]
     public async Task<IActionResult> GetMostExpensiveProduct()
     {
-        var product = await _productRepository.GetMostExpensiveProductAsync();
+        var product = await _productService.GetMostExpensiveProductAsync();
 
         if (product == null)
         {
@@ -39,7 +39,7 @@ public class ProductsController : ControllerBase
     [HttpGet("average-price")]
     public async Task<IActionResult> GetAverageProductPrice()
     {
-        var averagePrice = await _productRepository.GetAverageProductPriceAsync();
+        var averagePrice = await _productService.GetAverageProductPriceAsync();
 
         return Ok(new { averagePrice = averagePrice });
     }
@@ -48,14 +48,14 @@ public class ProductsController : ControllerBase
     [HttpGet("without-description")]
     public async Task<IActionResult> GetProductsWithoutDescription()
     {
-        var products = await _productRepository.GetProductsWithoutDescriptionAsync();
+        var products = await _productService.GetProductsWithoutDescriptionAsync();
         return Ok(products);
     }
     
     [HttpGet("by-client/{clientId}")]
     public async Task<IActionResult> GetProductsByClient(int clientId)
     {
-        var products = await _productRepository.GetProductsSoldToClientAsync(clientId);
+        var products = await _productService.GetProductsSoldToClientAsync(clientId);
         return Ok(products);
     }
 }

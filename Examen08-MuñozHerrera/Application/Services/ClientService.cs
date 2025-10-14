@@ -1,14 +1,19 @@
-using Microsoft.AspNetCore.Mvc;
+using Examen08_MuñozHerrera.DTOs;
+using Examen08_MuñozHerrera.Core.Interfaces;
 
 namespace Examen08_MuñozHerrera.Application.Services;
 
-[ApiController]
-[Route("[controller]")]
-public class NAME : ControllerBase
+public class ClientService : IClientService
 {
-    [HttpGet]
-    public IActionResult Get()
+    private readonly IClientRepository _clientRepository;
+
+    public ClientService(IClientRepository clientRepository)
     {
-        return Ok();
+        _clientRepository = clientRepository;
+    }
+
+    public Task<ClientWithOrderCountDto?> GetClientWithMostOrdersAsync()
+    {
+        return _clientRepository.GetClientWithMostOrdersAsync();
     }
 }

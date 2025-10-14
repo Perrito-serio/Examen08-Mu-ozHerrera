@@ -1,42 +1,28 @@
-using Examen08_MuñozHerrera.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Examen08_MuñozHerrera.Core.Interfaces; // <-- Importante
 
-namespace Examen08_MuñozHerrera.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class ClientsController : ControllerBase
+namespace Examen08_MuñozHerrera.Controllers
 {
-    private readonly IClientRepository _clientRepository;
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ClientsController : ControllerBase
+    {
+        private readonly IClientService _clientService; // <-- Inyecta el SERVICIO
 
-    public ClientsController(IClientRepository clientRepository)
-    {
-        _clientRepository = clientRepository;
-    }
-
-    // GET: api/clients/search?name=Juan
-    [HttpGet("search")]
-    public async Task<IActionResult> GetClientsByName([FromQuery] string name)
-    {
-        var clients = await _clientRepository.FindClientsByNameAsync(name);
-        return Ok(clients);
-    }
-    
-    [HttpGet("with-most-orders")]
-    public async Task<IActionResult> GetClientWithMostOrders()
-    {
-        var client = await _clientRepository.GetClientWithMostOrdersAsync();
-        if (client == null)
+        public ClientsController(IClientService clientService) // <-- Pide el SERVICIO
         {
-            return NotFound("No se encontraron clientes con pedidos.");
+            _clientService = clientService;
         }
-        return Ok(client);
-    }
-    
-    [HttpGet("by-product/{productId}")]
-    public async Task<IActionResult> GetClientsByProduct(int productId)
-    {
-        var clients = await _clientRepository.GetClientsByProductAsync(productId);
-        return Ok(clients);
+
+        [HttpGet("most-orders")]
+        public async Task<IActionResult> GetClientWithMostOrders()
+        {
+            var clientDto = await _clientService.GetClientWithMostOrdersAsync(); // <-- Llama al SERVICIO
+            if (clientDto == null)
+            {
+                return NotFound("No se encontraron clientes con órdenes.");
+            }
+            return Ok(clientDto);
+        }
     }
 }

@@ -7,21 +7,18 @@ namespace Examen08_MuñozHerrera.Controllers;
 [Route("api/[controller]")]
 public class OrdersController : ControllerBase
 {
-    private readonly IOrderDetailRepository _orderDetailRepository;
-    private readonly IOrderRepository _orderRepository; 
+    private readonly IOrderService _orderService;
 
-    public OrdersController(IOrderDetailRepository orderDetailRepository, IOrderRepository orderRepository)
+    public OrdersController(IOrderService orderService)
     {
-        _orderDetailRepository = orderDetailRepository;
-        _orderRepository = orderRepository;
-
+        _orderService = orderService;
     }
 
     // GET: api/orders/1/details
     [HttpGet("{orderId}/details")]
     public async Task<IActionResult> GetOrderDetails(int orderId)
     {
-        var details = await _orderDetailRepository.GetDetailsByOrderIdAsync(orderId);
+        var details = await _orderService.GetDetailsByOrderIdAsync(orderId);
         return Ok(details);
     }
     
@@ -29,7 +26,7 @@ public class OrdersController : ControllerBase
     [HttpGet("{orderId}/total-quantity")]
     public async Task<IActionResult> GetTotalQuantity(int orderId)
     {
-        var total = await _orderDetailRepository.GetTotalQuantityByOrderIdAsync(orderId);
+        var total = await _orderService.GetTotalQuantityByOrderIdAsync(orderId);
         return Ok(new { orderId = orderId, totalQuantity = total });
     }
     
@@ -37,14 +34,14 @@ public class OrdersController : ControllerBase
     [HttpGet("after-date")]
     public async Task<IActionResult> GetOrdersAfterDate([FromQuery] DateTime date)
     {
-        var orders = await _orderRepository.GetOrdersAfterDateAsync(date);
+        var orders = await _orderService.GetOrdersAfterDateAsync(date);
         return Ok(orders);
     }
     
     [HttpGet("with-details")]
     public async Task<IActionResult> GetAllOrdersWithDetails()
     {
-        var orders = await _orderRepository.GetAllOrdersWithDetailsAsync();
+        var orders = await _orderService.GetAllOrdersWithDetailsAsync();
         return Ok(orders);
     }
 }

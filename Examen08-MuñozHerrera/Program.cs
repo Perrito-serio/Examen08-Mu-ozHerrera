@@ -2,6 +2,7 @@
 using Examen08_MuñozHerrera.Core.Interfaces;
 using Examen08_MuñozHerrera.Infrastructure.Data;
 using Examen08_MuñozHerrera.Infrastructure.Repositories;
+using Examen08_MuñozHerrera.Application.Services;
 using Microsoft.EntityFrameworkCore;
 
 // ========= Creación del Constructor de la Aplicación ===========
@@ -18,6 +19,10 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>(); 
 builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 
 builder.Services.AddControllers();
